@@ -1,0 +1,47 @@
+// Created on Thu March 19 2020
+
+int lmotor = 0;
+int rmotor = 2;
+int rightrange = 2;
+int leftrange = 0;
+int middlerange = 1;
+int rightreflect = 6;
+int leftreflect = 5;
+int lefttouch = 8;
+int righttouch = 9;
+
+int main()
+{
+	while(digital(righttouch) == 0){
+		forward(); //move forward while right bumper isn't touched
+		printf("forward\n");
+	}
+	ao();
+	while(1){
+		turnleft(); //turn left after right bumper is touched
+		printf("turnleft\n");
+		if(digital(lefttouch) == 1){
+			break; //stop after left bumper is touched
+		}
+	}
+	ao();
+	
+	printf("forward\n");
+	printf("Hello, World!\n");
+	return 0;
+}
+
+void forward(){
+	motor(lmotor, 50);
+	motor(rmotor, 50);
+}
+
+void turnright(){
+	motor(lmotor, -50);
+	motor(rmotor, 50);
+}
+
+void turnleft(){
+	motor(lmotor, 50);
+	motor(rmotor, -30);
+}
