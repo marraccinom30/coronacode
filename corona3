@@ -1,0 +1,95 @@
+// Created on Mon March 23 2020
+int lmotor = 0;
+int rmotor = 2;
+int rightrange = 2;
+int leftrange = 0;
+int middlerange = 1;
+int r_sensor = 6;
+int l_sensor = 5;
+int l_bump = 8;
+int r_bump = 9;
+int lturntime = 1000;
+int rturntime = 300;
+int ftime = 500;
+int lmvr = 100;
+int rmvr = 0;
+int lmvl = 0;
+int rmvl = 100;
+int main()
+{
+	faceline();
+	linefollow();
+	printf("Goodbye, World!\n");
+	return 0;
+}
+
+void faceline(){
+	while(1){
+		r_turn(); //turn right slightly at the start
+		msleep(rturntime);
+		printf("rturn1\n");
+		break;
+	}
+	while(1){
+		forward(); //move forward
+		if(analog(l_sensor) > 0){
+			forward(); //move forward after passing first black line for set amount of time
+			msleep(ftime);
+			break;
+		}
+	}
+	ao();
+	printf("break\n");
+	while(digital(l_bump) == 0){
+		forward(); //move forward till bumper is pressed
+		printf("forward1\n");
+		if(analog(l_sensor) > 0){
+			r_turn(); //turn right if robot hits black line
+			printf("rturn2\n");
+		}
+	}
+	ao();
+	l_turn(); //turn left if bumper is pressed
+	printf("l_turn\n");
+	msleep(lturntime);
+	while(analog(l_sensor) == 0){
+		forward(); //go forward till the robot sees the line
+	}
+	ao();
+}
+void linefollow(){
+	while(digital(l_bump) == 0){ //while the left bumper isn't pressed
+        if (analog(l_sensor) > 0){
+          veerright(); //veer right when the line is detected
+		  printf("veerright\n");
+        }
+        if (analog(l_sensor) == 0){
+          veerleft(); //veer left when the line is not detected
+		  printf("veerleft\n");
+        }
+      }
+    }
+void veerright(){
+	 printf("right\n");
+     motor(lmotor, lmvr);
+     motor(rmotor, -rmvr);
+}
+void veerleft(){
+	printf("left\n");
+    motor(rmotor, rmvl);
+    motor(lmotor, -lmvl);
+}
+void forward(){
+	motor(lmotor, 50);
+	motor(rmotor, 50);
+}
+
+void r_turn(){
+	motor(lmotor, 30);
+	motor(rmotor, -30);
+}
+
+void l_turn(){
+	motor(lmotor, -50);
+	motor(rmotor, 30);
+}
