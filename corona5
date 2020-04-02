@@ -1,0 +1,89 @@
+// Created on Thu April 2 2020
+int lmotor = 0;
+int rmotor = 2;
+int rightrange = 2;
+int leftrange = 0;
+int middlerange = 1;
+int r_sensor = 6;
+int l_sensor = 5;
+int l_bump = 8;
+int r_bump = 9;
+int lturntime = 1000;
+int rturntime = 300;
+int ftime = 500;
+int lmvr = 100;
+int rmvr = -20;
+int lmvl = -20;
+int rmvl = 100;
+int counter = 0;
+
+int main()
+{
+	while(analog(r_sensor) == 0){//wallfollow while line is not detected
+	wallfollow();	
+	}
+	printf("1\n");
+	while(analog(r_sensor) > 0){//wallfollow while line is detected
+	wallfollow();	
+	}
+    printf("2\n");
+	while(analog(r_sensor) == 0){//wallfollow while line is not detected
+	wallfollow();	
+	}
+    printf("3\n");
+	while(analog(r_sensor) > 0){//wallfollow while line is detected
+	wallfollow();	
+	}
+	printf("4\n");
+	while(analog(r_sensor) == 0){//wallfollow while line is not detected
+	wallfollow();	
+	}
+	printf("5\n");	
+	while(analog(r_sensor) > 0){//wallfollow while line is detected
+	forward();	
+	}
+	printf("6\n");	
+	while(analog(r_sensor) == 0){//wallfollow while line is not detected
+	wallfollow();	
+	}
+	printf("7\n");
+	while(analog(r_sensor) > 0){//wallfollow while line is detected
+	wallfollow();	
+	}
+	printf("8\n");
+	while(digital(l_bump) == 0){//wallfollow while line is detected
+		forwardleft();
+	}
+	printf("Goodbye, World!\n");
+	return 0;
+}
+
+void wallfollow(){
+	if(analog(rightrange) > 350){
+		veerright(); //veer right when wall is out of range
+	}
+	if(analog(rightrange) <	350){//veer left when wall is in range
+		veerleft();
+	}
+  
+}
+void forward(){
+	motor(lmotor, 50); //move forward
+	motor(rmotor, 50);
+}
+void forwardleft(){ //move slightly left
+	motor(lmotor, 35);
+	motor(rmotor, 70);
+}
+void forwardright(){ //move slightly right
+	motor(lmotor, 65);
+	motor(rmotor, 50);
+}
+void veerright(){
+     motor(lmotor, lmvr); //veer right
+     motor(rmotor, -rmvr);
+}
+void veerleft(){
+    motor(rmotor, rmvl); //veer left
+    motor(lmotor, -lmvl);
+}
