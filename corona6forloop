@@ -1,0 +1,44 @@
+// Created on Thu April 2 2020
+int lmotor = 0;
+int rmotor = 2;
+int rightrange = 2;
+int leftrange = 0;
+int middlerange = 1;
+int r_sensor = 6;
+int l_sensor = 5;
+int l_bump = 8;
+int r_bump = 9;
+int lturntime = 1000;
+int rturntime = 300;
+int ftime = 500;
+int lmvr = 100;
+int rmvr = -20;
+int lmvl = -20;
+int rmvl = 100;
+int counter = 0;
+
+int main()
+{
+	for(counter = 1; counter <=6; counter++){ //repeat loop 6 times then stop
+		forwardleft(); //move left for 300ms
+		msleep(300);
+		forwardright(); //move right for 300ms
+		msleep(300);
+		printf("counter =%d\n", counter); //print counter value
+	}
+	printf("Goodbye, World!\n");
+	return 0;
+}
+
+void forward(){
+	motor(lmotor, 50); //move forward
+	motor(rmotor, 50);
+}
+void forwardleft(){ //move slightly left
+	motor(lmotor, 35);
+	motor(rmotor, 70);
+}
+void forwardright(){ //move slightly right
+	motor(lmotor, 65);
+	motor(rmotor, 50);
+}
